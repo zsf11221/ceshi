@@ -1,38 +1,15 @@
-# ECHO Sentinel V0.5 — BSC Research Desk
+# ECHO Sentinel V0.6
 
-静态 BSC 项目研究工作台。无需 npm 安装、API Key 或钱包，不签名、不发送交易。
+BNB Chain early-stage intelligence website with a standalone research terminal.
 
-## 部署
+## Features
+- Responsive bilingual landing page, user journey and roadmap
+- Research terminal with real GANG token reference, linked documentation and DexScreener market data
+- Read-only BSC eth_getCode contract lookup
+- Offline hypothetical BNB fee calculator (proposed 1% fee is not live)
 
-连接本仓库到 Netlify，保持 Base directory 为空、Build command 留空，根目录的 `netlify.toml` 会将 `site` 作为发布目录。也可直接将 `site` 文件夹上传到 Netlify Drop。
-本地：在仓库根目录执行 `python -m http.server 8080 --directory site`，用浏览器打开本地服务。
+## Deployment
+Static site at `site/index.html`. Netlify publishes `site` using root `netlify.toml`. No build dependencies.
 
-## V0.5 新增
-
-- 输入 20 字节 BSC 地址，先确认 RPC 返回主网 Chain ID 56。
-- 获取查询区块，并将代码、合约方法与 EIP-1967 槽位读取固定到同一区块。
-- 显示运行时代码大小、name/symbol/decimals 自报字段、owner() 自报地址，以及实现/Beacon 槽线索。
-- 没有代码时单独提示；方法不存在、回退或无效 ABI 时显示未知，不输出安全评分。
-- 五项人工检查清单：来源、源码、权限、供应/交易限制及参与成本。可保存本地备注。
-- JSON 导出当前证据、来源 RPC、区块、时间、未保存的表单备注与能力边界。
-- 最近 20 次成功查询的本地时间线。它不是实时链上监控，没有自动告警。
-
-保留 V0.4 的公开资料/演示隔离、关注、筛选、对比和关注导出。公开资料 GANG 仍只继承原始附件线索，未独立核验。
-
-## 网络与可信度
-
-浏览器直接请求 `https://bsc-dataseed.bnbchain.org`。部署站点的网络环境、RPC 服务及 CORS 策略必须允许 JSON-RPC POST；否则页面显示读取失败。公共 RPC 可能限流，单次请求超时 12 秒。地址会发送给 RPC 提供方。
-本云环境对该域名的连接被代理返回 403，尚未验证真实 RPC 请求或浏览器 CORS 可用性；因此不能将本版描述为已通过线上验收。生产使用应配置有可用性保障的只读 RPC 或后端代理，绝不能把私密 RPC Key 放入公开脚本。
-
-本版只依赖一个 RPC，没有多源交叉验证。代币字段和 owner() 由合约返回，可能虚假。零 EIP-1967 槽不证明不可升级；非零槽也不自动证明实现代码或权限。未接入 BscScan 源码验证服务，未进行持币分析、完整角色识别、交易模拟、安全审计、实时告警或链上报告存证。
-
-人工“已核查”仅是用户记录，不等于平台独立核验。检查清单不改变项目列表的核验状态。备注仅保存在当前浏览器，不跨设备同步；页面重载会丢失未保存备注。切换主界面或语言也会重建研究面板，请先保存备注。导出会包含备注，分享前自行检查内容。
-
-## 验证
-
-`node --test tests/research.test.cjs`：6 项测试通过，覆盖固定区块、地址校验、错误网络、无代码地址、调用失败及 ABI 边界。所有前端 JS 通过语法检查。
-这些测试使用模拟 RPC，不证明真实链上数据读取成功。本版未完成真实浏览器端到端与手机视觉验收；发布前应验证表单、跨域 RPC、焦点管理、存储和下载行为。
-
-## 目录
-
-`site/` 为可部署源码；`tests/` 为只读 RPC 测试；`ECHO-Sentinel-V0.5.zip` 为包含站点和说明的分发包。
+## Limitations
+No automated 30-minute chain indexing, AI security audit, NFT/inscription feed, Binance Agentic Wallet native pairing, transaction simulation, live trades, minting or fee collection. Bytecode presence does not prove safety. Market API requests may fail due to network restrictions.
